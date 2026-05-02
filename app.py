@@ -49,5 +49,6 @@ def login_submit():
 def home():
     return render_template("home.html")
 
-@app.route("/bridge.html")
-
+@app.route("/bridge")
+def game():
+    return render_template("bridge.html")

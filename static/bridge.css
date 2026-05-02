@@ -1,0 +1,9 @@
+#body {
+    display: flex;
+}
+
+#board {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
