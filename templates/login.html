@@ -1,0 +1,21 @@
+<!-- Template from https://gitlab.com/dawson-cst-cohort-2027/420/section-3/ifthi/chatroomapp/ -->
+<!-- School project so repo is private ^ --> 
+<html>
+
+<head>
+    <title>Login</title>
+</head>
+
+<body>
+    {% for message in get_flashed_messages() %}
+    <div class="error">There was an error: {{ message }}</div>
+    {% endfor %}
+    <h1>Welcome Back!</h1>
+        <form method="post">
+            <input name="username" placeholder="Username" />
+            <input name="password" placeholder="password" />
+            <input type="submit"/>
+        </form>
+</body>
+
+</html>
