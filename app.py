@@ -51,3 +51,7 @@ def home():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
+@app.route("/bridge")
+def game():
+    return render_template("bridge.html")
