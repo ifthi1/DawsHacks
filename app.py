@@ -112,10 +112,22 @@ def logout():
     logout_user()
     return redirect(url_for("login"))
 
-@app.route("/character")
+@app.route("/character", methods=['GET', 'POST'])
 @login_required
 def character():
-    return render_template("character.html")
+    if request.method == 'GET':
+        # Show character selection page
+        return render_template("character.html")
+    
+    elif request.method == 'POST':
+        # Get user ID from session
+        user_id = current_user.user_id
+        answer =  request.form['answer']
+        if answer == "yes":
+            return render_template("endgame1")
+        if answer == "no":
+            return render_template("endgame2")
+    
 
 @app.route("/upgrades")
 @login_required
