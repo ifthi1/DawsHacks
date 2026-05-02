@@ -1,0 +1,24 @@
+bridges
+- connections
+- oppurtuonities
+- tool to automaticlly issue citations on mla
+- gold
+- sea of thieves
+- pirates and connections 
+- dora the explorer
+- solve a riddle
+- cross lands
+- peope, links
+- cultures
+- map bridges
+
+
+RUN flask 
+- python -m flask run --debug
+- Ctrl + C
+
+get code from main
+- git pull origin <branch>
+
+push code
+- git push origin <branch>
