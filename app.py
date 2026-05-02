@@ -117,6 +117,16 @@ def logout():
 def character():
     return render_template("character.html")
 
+@app.route("/endgame1")
+@login_required
+def endgame1():
+    return render_template("endgame1.html")
+
+@app.route("/endgame2")
+@login_required
+def endgame2():
+    return render_template("endgame2.html")
+
 @app.route("/upgrades")
 @login_required
 def upgrades():
