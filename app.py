@@ -124,9 +124,9 @@ def character():
         user_id = current_user.user_id
         answer =  request.form['answer']
         if answer == "yes":
-            return render_template("endgame1")
+            return render_template("endgame1.html")
         if answer == "no":
-            return render_template("endgame2")
+            return render_template("endgame2.html")
     
 
 @app.route("/endgame1")

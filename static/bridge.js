@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", function(e) {
     let money=0;
     let level = 0;
-    let timeToComplete=5000;
+    let timeToComplete=1000;
     let multiplier=1;
     let addition=0;
     const menu = document.getElementById("menu");
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
             } else if(e.target.id === "addition"){
                 addition += value
             } else if(e.target.id === "levelUpgrade"){
-                addition += value
+                window.location.href = '/character'
             } 
         }
         clearInterval(tollProfit)
