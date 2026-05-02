@@ -27,7 +27,10 @@ if not database_exists:
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             commuterType TEXT NOT NULL,
             money INTEGER NOT NULL,
-            speed INTEGER NOT NULL
+            speed INTEGER NOT NULL,
+            game_id INTEGER NOT NULL,
+            FOREIGN KEY (game_id) REFERENCES game(id)
+
         )
     ''')
 
@@ -37,7 +40,9 @@ if not database_exists:
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             capacity INTEGER NOT NULL,
             toll INTEGER NOT NULL,
-            scenery TEXT NOT NULL
+            scenery TEXT NOT NULL,
+            game_id INTEGER NOT NULL,
+            FOREIGN KEY (game_id) REFERENCES game(id)
         )
     ''')
 
