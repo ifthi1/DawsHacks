@@ -22,3 +22,23 @@ get code from main
 
 push code
 - git push origin <branch>
+
+
+
+
+ifthi
+- skeleton for the bridge html (in progress)
+- 
+-
+-
+
+mahmoud
+- creating car and bridge and levels objects and update database (in progress)
+-
+-
+
+majd
+- front end
+-
+-
+-
