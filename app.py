@@ -47,6 +47,10 @@ def login_submit():
 @app.route("/upgrades")
 def upgrades():
     return render_template("upgrades.html")
+@app.route("/character")
+def character():
+    return render_template("character.html")
+
 @app.route("/")
 def home():
     return render_template("home.html")
