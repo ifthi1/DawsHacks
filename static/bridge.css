@@ -1,9 +1,40 @@
-#body {
+body {
     display: flex;
 }
 
 #board {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column-reverse;
+    flex: 3;
+    align-items: center;
+}
+
+#ground, #aboveGround {
+    width: fit-content;
+    height: fit-content;
+}
+
+#aboveGround{
+    align-items: end;
+    display: flex;
+}
+
+.city {
+    flex: 1;
+}
+
+#menu {
+    flex: 1;
+    border: 2px solid black;
+}
+
+#bridge {
+    width:70%;
+    flex: 3fr;
+}
+
+img {
+    width: 100%;
+    object-fit: contain;
 }
 
