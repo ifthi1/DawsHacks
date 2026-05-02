@@ -84,7 +84,9 @@ def login_submit():
     res = redirect(url_for("home"))
     res.set_cookie('user_id', str(user[0]),  max_age=3600)
     return res
-
+@app.route("/upgrades")
+def upgrades():
+    return render_template("upgrades.html")
 @app.route("/")
 def home():
     return render_template("home.html")
