@@ -19,6 +19,41 @@ if not database_exists:
     db.execute("INSERT INTO Users (username, password) VALUES('Ifthi', '1234')")
     db.execute("INSERT INTO Users (username, password) VALUES('Majd', '1234')")
     db.execute("INSERT INTO Users (username, password) VALUES('Mazo', '1234')")
+    
+    
+    # Create Commuter table using claude ai to save time
+    db.execute('''
+        CREATE TABLE IF NOT EXISTS commuter (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            commuterType TEXT NOT NULL,
+            money INTEGER NOT NULL,
+            speed INTEGER NOT NULL
+        )
+    ''')
+
+    # Create Bridge table using claude ai to save time
+    db.execute('''
+        CREATE TABLE IF NOT EXISTS bridge (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            capacity INTEGER NOT NULL,
+            toll INTEGER NOT NULL,
+            scenery TEXT NOT NULL
+        )
+    ''')
+
+    # Create Game table using claude ai to save time
+    db.execute('''
+        CREATE TABLE IF NOT EXISTS game (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            level INTEGER NOT NULL,
+            bridge_id INTEGER NOT NULL,
+            commuter_id INTEGER NOT NULL,
+            user_id INTEGER NOT NULL,
+            current_money INTEGER NOT NULL,
+            FOREIGN KEY (bridge_id) REFERENCES bridge(id),
+            FOREIGN KEY (commuter_id) REFERENCES commuter(id)
+        )
+    ''')
     db.commit()
 
 

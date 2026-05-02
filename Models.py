@@ -29,12 +29,13 @@ class Bridge:
         }
 
 class Game:
-    def __init__(self, id, level, bridge_id, commuter_id, user_id ):
+    def __init__(self, id, level, bridge_id, commuter_id, current_money, user_id ):
         self.id = id
         self.level = level
         self.bridge_id = bridge_id
         self.commuter_id = commuter_id
         self.user_id = user_id
+        self.current_money = current_money
 
 
 dictionary = {
