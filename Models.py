@@ -43,7 +43,7 @@ dictionary = {
     "level_1": {
         "bridge": "wood",
         "commuter": {
-            "type": "person"
+            "type": "person",
             "money":  "1"
         }
         
@@ -51,7 +51,7 @@ dictionary = {
     "level_2": {
         "bridge": "stone",
         "commuter": {
-            "type": "carriage"
+            "type": "carriage",
             "money":  "5"
         }
         
@@ -59,7 +59,7 @@ dictionary = {
     "level_3": {
         "bridge": "iron",
         "commuter": {
-            "type": "bike"
+            "type": "bike",
             "money":  "10"
         }
         
@@ -67,7 +67,7 @@ dictionary = {
     "level_4": {
         "bridge": "steel",
         "commuter": {
-            "type": "car"
+            "type": "car",
             "money":  "25"
         }
         
@@ -75,7 +75,7 @@ dictionary = {
     "level_5": {
         "bridge": "illuminate bar",
         "commuter": {
-            "type": "bus"
+            "type": "bus",
             "money":  "50"
         }
         
