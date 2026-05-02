@@ -143,7 +143,7 @@ def updateCommuter(commuter_id, updated_commuter):
         WHERE id = ?
     ''', (updated_commuter.money, updated_commuter.speed, commuter_id))
     db.commit()
-  
+
 ### implemented from claude ai
 ### selects a game from a user's id and if it doesnt exist it inserts a new game with that id
 ### also creates a bridge and a commuter
