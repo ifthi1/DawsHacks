@@ -1,9 +1,9 @@
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     font-family: 'Arial', sans-serif;
     color: #000000;
     margin: 0;
@@ -12,11 +12,14 @@ body {
 }
 
 #character {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border: 4px solid #333;
     border-radius: 8px;
     width: 500px;
     min-height: 300px;
-    margin: 50px auto;
     padding: 20px;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.95);
@@ -30,4 +33,30 @@ body {
 #character p {
     font-size: 16px;
     color: #333;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+#character button {
+    min-width: 120px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background-color: #010f92;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#character button#decline-button {
+    background-color: #333333;
+}
+
+#character button:hover {
+    opacity: 0.95;
 }
