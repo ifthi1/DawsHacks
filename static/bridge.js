@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
     let multiplier=1;
     let addition=0;
     const menu = document.getElementById("menu");
-    let value = Number(levelsInfo[level].commuter.money);
     let levelsInfo = [
         {
             "bridge": "wood",
@@ -50,9 +49,10 @@ document.addEventListener("DOMContentLoaded", function(e) {
         }
 
     ]
+    let value = Number(levelsInfo[level].commuter.money);
 
     for (let upgrade of document.getElementsByClassName("upgrade")){
-        let cost = document.createElement("h1")
+        let cost = document.createElement("h3")
         cost.textContent = value;
         upgrade.append(cost)
     }
