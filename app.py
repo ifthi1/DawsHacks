@@ -92,8 +92,14 @@ def home():
 if __name__ == "__main__":
     app.run(debug=True)
     
-@app.route("/bridge")
-def game():
+@app.route("/bridge", methods=['GET', 'POST'])
+def bridge():
+    if request.method == 'POST':
+        # Handle POST request (form submission)
+        # data = request.form['some_field']
+        updateGame(game_id, updated_game)
+        updateBridge(bridge_id, updated_bridge)
+        updateCommuter
     
     return render_template("bridge.html")
 
@@ -178,7 +184,3 @@ def get_or_create_game(user_id):
         
         game_id = cursor.lastrowid
         return Game(game_id, 1, bridge_id, commuter_id, user_id)
-
-# Usage
-game = get_or_create_game(conn, 101)
-print(f"Game {game.id}: User {game.user_id}, Level {game.level}")
