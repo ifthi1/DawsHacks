@@ -7,6 +7,8 @@ import secrets
 import json
 import datetime
 from datetime import datetime
+from Models import Game, Bridge, Commuter
+
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16) # This is necessary for flash!
@@ -28,8 +30,7 @@ if not database_exists:
             commuterType TEXT NOT NULL,
             money INTEGER NOT NULL,
             speed INTEGER NOT NULL,
-            game_id INTEGER NOT NULL,
-            FOREIGN KEY (game_id) REFERENCES game(id)
+            game_id INTEGER NOT NULL
 
         )
     ''')
@@ -41,8 +42,7 @@ if not database_exists:
             capacity INTEGER NOT NULL,
             toll INTEGER NOT NULL,
             scenery TEXT NOT NULL,
-            game_id INTEGER NOT NULL,
-            FOREIGN KEY (game_id) REFERENCES game(id)
+            game_id INTEGER NOT NULL
         )
     ''')
 
@@ -92,8 +92,15 @@ def home():
 if __name__ == "__main__":
     app.run(debug=True)
     
-@app.route("/bridge")
-def game():
+@app.route("/bridge", methods=['GET', 'POST'])
+def bridge():
+    if request.method == 'POST':
+        # Handle POST request (form submission)
+        # data = request.form['some_field']
+        updateGame(game_id, updated_game)
+        updateBridge(bridge_id, updated_bridge)
+        updateCommuter
+    
     return render_template("bridge.html")
 
 
@@ -103,7 +110,7 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
-
+# Db helper commands
 def updateGame(game_id, updated_game):
     db = get_db()
     cursor = db.cursor()
@@ -133,3 +140,47 @@ def updateCommuter(commuter_id, updated_commuter):
         WHERE id = ?
     ''', (updated_commuter.money, updated_commuter.speed, commuter_id))
     db.commit()
+
+### implemented from claude ai
+### selects a game from a user's id and if it doesnt exist it inserts a new game with that id
+### also creates a bridge and a commuter
+def get_or_create_game(user_id):
+    """Get game for user, or create one if it doesn't exist"""
+    db = get_db()
+    cursor = db.cursor()
+    
+    # Try to get existing game
+    cursor.execute('SELECT * FROM games WHERE user_id = ?', (user_id,))
+    game_row = cursor.fetchone()
+    
+    if game_row:
+        # Game exists, return it
+        return Game(game_row[0], game_row[1], game_row[2], game_row[3], game_row[4], game_row[5])
+    else:
+        # Game doesn't exist, create one
+        cursor.execute('''
+            INSERT INTO bridges (capacity, toll, scenery)
+            VALUES (?, ?, ?, ?)
+        ''', (10, 5, "mid"))
+        db.commit()
+        bridge_id = cursor.lastrowid
+
+        cursor.execute('''
+            INSERT INTO commuters (commuterType, money, speed, game_id)
+            VALUES (?, ?, ?, ?)
+        ''', (
+            "person",
+            5,
+            10
+        ))
+        db.commit()
+        commuter_id = cursor.lastrowid
+
+        cursor.execute('''
+            INSERT INTO game (level, bridge_id, commuter_id, user_id)
+            VALUES (?, ?, ?, ?)
+        ''', (1, bridge_id, commuter_id, user_id))  # Default: level 1, bridge , commuter 
+        db.commit()
+        
+        game_id = cursor.lastrowid
+        return Game(game_id, 1, bridge_id, commuter_id, user_id)
