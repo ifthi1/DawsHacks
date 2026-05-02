@@ -41,11 +41,11 @@ def login_submit():
     user = get_db().execute("SELECT * FROM Users WHERE username = ? AND password = ?", [username, password]).fetchone()
     if not user:
       return "Name or password is wrong"
-    res = redirect(url_for("chatroom_view"))
+    res = redirect(url_for("home"))
     res.set_cookie('user_id', str(user[0]),  max_age=3600)
     return res
 
 @app.route("/")
-def login_submit():
+def home():
     return render_template("home.html")
 
