@@ -112,6 +112,11 @@ def logout():
     logout_user()
     return redirect(url_for("login"))
 
+@app.route("/character")
+@login_required
+def character():
+    return render_template("character.html")
+
 @app.route("/upgrades")
 @login_required
 def upgrades():
