@@ -1,9 +1,9 @@
 class Commuter:
-    def __init__(self, commuterType, money, speed, game_id):
+    def __init__(self, id, commuterType, money, speed):
+        self.id = id
         self.commuterType = commuterType
         self.money = money
         self.speed = speed
-        self.game_id = game_id
     def to_dict(self):
         return {
             'commuterType': self.commuterType,
@@ -14,12 +14,11 @@ class Commuter:
         return f"commuterType: {self.commuterType}, money: {self.money}, speed: {self.speed}"
 
 class Bridge:
-    def __init__(self, id, capacity, toll, scenery, game_id ):
+    def __init__(self, id, capacity, toll, scenery):
         self.id = id
         self.capacity = capacity
         self.toll = toll
         self.scenery = scenery
-        self.game_id = game_id
     
     def to_dict(self):
         return {

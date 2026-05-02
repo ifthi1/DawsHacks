@@ -134,12 +134,22 @@ if __name__ == "__main__":
 @login_required
 def bridge():
     game = get_or_create_game(current_user.user_id)
-    # if request.method == 'POST':
+    if request.method == 'POST':
         # Handle POST request (form submission)
         # data = request.form['some_field']
-        # updateGame(game_id, updated_game)
-        # updateBridge(bridge_id, updated_bridge)
-        # updateCommuter(commuter_id, updated_commuter)
+        data = request.get_json()
+        bridge = getBridge(game.id)
+        commuter = getCommuter(game.id)
+        game.level = data.get('level')
+        game.current_money = game.current_money - 100
+        bridge.toll = bridge.toll * game.level
+        bridge.capacity = bridge.capacity * game.level
+        commuter.money = commuter.money * game.level
+        commuter.speed = commuter.speed * game.level
+
+        updateGame(game.id, commuter)
+        updateBridge(bridge.id, bridge)
+        updateCommuter(commuter.id, commuter)
     
     # game = get_or_create_game(current_user)
     return render_template("bridge.html", game=game)
@@ -181,6 +191,31 @@ def updateCommuter(commuter_id, updated_commuter):
         WHERE id = ?
     ''', (updated_commuter.money, updated_commuter.speed, commuter_id))
     db.commit()
+
+def getBridge(game_id):
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute('SELECT * FROM bridges WHERE game_id = ?', (game_id,))
+    bridge_row = cursor.fetchone()
+    if not bridge_row:
+        return {'error': 'Bridge not found'}, 404
+    # bridge_row: (id, capacity, toll, scenery)
+    bridge = Bridge(bridge_row[0], bridge_row[1], bridge_row[2], bridge_row[3])
+    return bridge
+
+def getCommuter(game_id):
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute('SELECT * FROM commuters WHERE game_id = ?', (game_id,))
+    commuter_row = cursor.fetchone()
+    
+    if not commuter_row:
+        return {'error': 'Commuter not found'}, 404
+    
+    # commuter_row: (id, commuterType, money, speed)
+    commuter = Commuter(commuter_row[0], commuter_row[1], commuter_row[2], commuter_row[3])
+    return commuter
+
 
 ### implemented from claude ai
 ### selects a game from a user's id and if it doesnt exist it inserts a new game with that id
@@ -225,3 +260,13 @@ def get_or_create_game(user_id):
         
         game_id = cursor.lastrowid
         return Game(game_id, 1, bridge_id, commuter_id, user_id, 0)
+
+
+@app.route("/api/getCurrentGame/<user_id>" , methods=['GET'])
+@login_required
+def getGameAPI(user_id):
+    game = get_or_create_game(current_user.user_id)
+    return {
+        'level': game.level,
+        'current_money': game.current_money
+    }
