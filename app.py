@@ -49,3 +49,5 @@ def login_submit():
 def home():
     return render_template("home.html")
 
+@app.route("/bridge.html")
+
