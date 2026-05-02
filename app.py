@@ -14,6 +14,24 @@ from Models import Game, Bridge, Commuter
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16) # This is necessary for flash!
 
+login_manager = LoginManager()
+login_manager.login_view = 'login'
+login_manager.init_app(app)
+
+class User(UserMixin):
+    def __init__(self, id, name, password):
+        self.id = name
+        self.user_id = id
+        self.name = name
+        self.password = password
+
+@login_manager.user_loader
+def user_loader(name):
+    record = get_db().execute("SELECT id, username, password FROM Users WHERE name = ? LIMIT 1", [name]).fetchone()
+    if not record:
+        return None
+    return User(record[0], record[1], record[2])
+
 path = "bridge.db" 
 database_exists = os.path.isfile(path)
 db = sqlite3.connect("bridge.db")
@@ -71,20 +89,26 @@ def get_db():
     g._database = db
   return db
 
-@app.route("/login")
-def login_page():
-  return render_template("login.html")
+@app.route("/login", methods=["POST"])
+def login():
+    name = request.form["name"]
+    password = request.form["password"]
+    record = get_db().execute("SELECT id, password FROM Users WHERE name = ? LIMIT 1", [name]).fetchone()
+    print("Record: ",record)
+    if not record or password != record[1]:
+        print("Record: ",record)
+        flash("Login info invalid!!!")
+        return redirect(url_for("login_form"))
+    user = User(record[0], name, record[1])
+    login_user(user)
+    return redirect(url_for("home"))
 
-@app.route("/login", methods=['POST'])
-def login_submit():
-    username = request.form['username']
-    password = request.form['password']
-    user = get_db().execute("SELECT * FROM Users WHERE username = ? AND password = ?", [username, password]).fetchone()
-    if not user:
-      return "Name or password is wrong"
-    res = redirect(url_for("home"))
-    res.set_cookie('user_id', str(user[0]),  max_age=3600)
-    return res
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("login"))
+
 
 @app.route("/")
 def home():
@@ -96,14 +120,14 @@ if __name__ == "__main__":
 @app.route("/bridge", methods=['GET', 'POST'])
 def bridge():
     game = get_or_create_game(current_user)
-    if request.method == 'POST':
+    # if request.method == 'POST':
         # Handle POST request (form submission)
         # data = request.form['some_field']
-        updateGame(game_id, updated_game)
-        updateBridge(bridge_id, updated_bridge)
-        updateCommuter(commuter_id, updated_commuter)
+        # updateGame(game_id, updated_game)
+        # updateBridge(bridge_id, updated_bridge)
+        # updateCommuter(commuter_id, updated_commuter)
     
-    game = get_or_create_game(current_user)
+    # game = get_or_create_game(current_user)
     return render_template("bridge.html", game=game)
 
 
