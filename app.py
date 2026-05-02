@@ -1,6 +1,7 @@
 #Template from https://gitlab.com/dawson-cst-cohort-2027/420/section-3/ifthi/chatroomapp/
 #School project so repo is private ^
 from flask import Flask, g, render_template, request, flash, redirect, url_for
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 import os
 import sqlite3
 import secrets
@@ -94,14 +95,16 @@ if __name__ == "__main__":
     
 @app.route("/bridge", methods=['GET', 'POST'])
 def bridge():
+    game = get_or_create_game(current_user)
     if request.method == 'POST':
         # Handle POST request (form submission)
         # data = request.form['some_field']
         updateGame(game_id, updated_game)
         updateBridge(bridge_id, updated_bridge)
-        updateCommuter
+        updateCommuter(commuter_id, updated_commuter)
     
-    return render_template("bridge.html")
+    game = get_or_create_game(current_user)
+    return render_template("bridge.html", game=game)
 
 
 @app.teardown_appcontext
