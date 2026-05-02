@@ -68,3 +68,12 @@ a {
     padding: 0;
     background-attachment: fixed;
 }
+#upgrade-box {
+    border: 4px solid #333; /* thickness, style, color */
+    border-radius: 8px;     /* optional: rounds the corners */
+    width: 500px;           /* horizontal width */
+    min-height: 500px;      /* vertical height (expands if text grows) */
+    margin: 50px auto;      
+    padding: 20px;          /* space between the text and the outline */
+    text-align: center; /* Centers text horizontally */
+}
