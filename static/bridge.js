@@ -6,8 +6,10 @@ document.addEventListener("DOMContentLoaded", function(e) {
     const menu = document.getElementById("menu");
     
 
-    // handle all buttons
+    // handle all options
     menu.addEventListener("click", function(e){
-
+        if (e.target.){
+            
+        }
     })
 });
