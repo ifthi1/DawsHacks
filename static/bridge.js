@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
     let multiplier=1;
     let addition=0;
     const menu = document.getElementById("menu");
+    let value = Number(levelsInfo[level].commuter.money);
     let levelsInfo = [
         {
             "bridge": "wood",
@@ -50,16 +51,24 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
     ]
 
+    for (let upgrade of document.getElementsByClassName("upgrade")){
+        let cost = document.createElement("h1")
+        cost.textContent = value;
+        upgrade.append(cost)
+    }
+
     // handle all options
     document.addEventListener("click", function(e){
         if (e.target.classList.contains("upgrade")){
-            
+            if (e.target.id === "addition"){
+
+            }
         }
     })
 
     let tollProfit = setInterval(addMoney, timeToComplete);
     function addMoney(){
-        money += Number(levelsInfo[level].commuter.money)
+        money += value
         document.getElementById("money").textContent = "Money: " + money + "$"
     }
 });
