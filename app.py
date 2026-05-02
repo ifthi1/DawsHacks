@@ -109,6 +109,9 @@ def logout():
     logout_user()
     return redirect(url_for("login"))
 
+@app.route("/upgrades")
+def upgrades():
+    return render_template("upgrades.html")
 
 @app.route("/")
 def home():
