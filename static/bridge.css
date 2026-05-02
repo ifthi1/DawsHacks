@@ -7,6 +7,7 @@ body {
     flex-direction: column-reverse;
     flex: 3;
     align-items: center;
+    background-color: rgb(189, 255, 253);
 }
 
 #ground, #aboveGround {
@@ -38,3 +39,42 @@ img {
     object-fit: contain;
 }
 
+.upgrade-section {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.upgrade {
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 15px;
+    width: 200px;
+    text-align: center;
+    background-color: #ffe600;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.upgrade h4 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #000;
+}
+
+.upgrade p {
+    font-size: 14px;
+    color: #333;
+}
+
+h3 {
+    margin-top: 25px;
+    font-size: 24px;
+    color: #000;
+    text-align: center;
+}
+
+h2{
+    text-align: center;
+}
