@@ -51,6 +51,14 @@ document.addEventListener("DOMContentLoaded", function(e) {
     ]
     let value = Number(levelsInfo[level].commuter.money);
 
+
+    let tollProfit = setInterval(addMoney, timeToComplete);
+    function addMoney(){
+        money += value
+        document.getElementById("money").textContent = "Money: " + money + "$"
+    }
+
+
     for (let upgrade of document.getElementsByClassName("upgrade")){
         let cost = document.createElement("h3")
         cost.textContent = value;
@@ -61,14 +69,18 @@ document.addEventListener("DOMContentLoaded", function(e) {
     document.addEventListener("click", function(e){
         if (e.target.classList.contains("upgrade")){
             if (e.target.id === "addition"){
-
-            }
+                addition += value
+            } else if (e.target.id === "timeToComplete"){
+                timeToComplete -= value
+            } else if(e.target.id === "addition"){
+                addition += value
+            } else if(e.target.id === "levelUpgrade"){
+                addition += value
+            } 
         }
+        clearInterval(tollProfit)
+        tollProfit = setInterval(addMoney, timeToComplete);
     })
 
-    let tollProfit = setInterval(addMoney, timeToComplete);
-    function addMoney(){
-        money += value
-        document.getElementById("money").textContent = "Money: " + money + "$"
-    }
+    
 });
