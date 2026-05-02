@@ -133,6 +133,3 @@ def updateCommuter(commuter_id, updated_commuter):
         WHERE id = ?
     ''', (updated_commuter.money, updated_commuter.speed, commuter_id))
     db.commit()
-
-
-  
