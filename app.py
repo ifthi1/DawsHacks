@@ -48,8 +48,7 @@ if not database_exists:
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             commuterType TEXT NOT NULL,
             money INTEGER NOT NULL,
-            speed INTEGER NOT NULL,
-            game_id INTEGER NOT NULL
+            speed INTEGER NOT NULL
 
         )
     ''')
@@ -60,8 +59,7 @@ if not database_exists:
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             capacity INTEGER NOT NULL,
             toll INTEGER NOT NULL,
-            scenery TEXT NOT NULL,
-            game_id INTEGER NOT NULL
+            scenery TEXT NOT NULL
         )
     ''')
 
@@ -115,10 +113,12 @@ def logout():
     return redirect(url_for("login"))
 
 @app.route("/upgrades")
+@login_required
 def upgrades():
     return render_template("upgrades.html")
 
 @app.route("/")
+@login_required
 def home():
     return render_template("home.html")
 
@@ -126,8 +126,9 @@ if __name__ == "__main__":
     app.run(debug=True)
     
 @app.route("/bridge", methods=['GET', 'POST'])
+@login_required
 def bridge():
-    game = get_or_create_game(current_user)
+    game = get_or_create_game(current_user.user_id)
     # if request.method == 'POST':
         # Handle POST request (form submission)
         # data = request.form['some_field']
@@ -195,14 +196,14 @@ def get_or_create_game(user_id):
         # Game doesn't exist, create one
         cursor.execute('''
             INSERT INTO bridges (capacity, toll, scenery)
-            VALUES (?, ?, ?, ?)
+            VALUES (?, ?, ?)
         ''', (10, 5, "mid"))
         db.commit()
         bridge_id = cursor.lastrowid
 
         cursor.execute('''
-            INSERT INTO commuters (commuterType, money, speed, game_id)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO commuters (commuterType, money, speed)
+            VALUES (?, ?, ?)
         ''', (
             "person",
             5,
@@ -212,10 +213,10 @@ def get_or_create_game(user_id):
         commuter_id = cursor.lastrowid
 
         cursor.execute('''
-            INSERT INTO game (level, bridge_id, commuter_id, user_id)
-            VALUES (?, ?, ?, ?)
-        ''', (1, bridge_id, commuter_id, user_id))  # Default: level 1, bridge , commuter 
+            INSERT INTO games (level, bridge_id, commuter_id, user_id, current_money)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (1, bridge_id, commuter_id, user_id, 0))  # Default: level 1, bridge , commuter 
         db.commit()
         
         game_id = cursor.lastrowid
-        return Game(game_id, 1, bridge_id, commuter_id, user_id)
+        return Game(game_id, 1, bridge_id, commuter_id, user_id, 0)
