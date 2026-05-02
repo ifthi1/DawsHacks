@@ -27,7 +27,7 @@ class User(UserMixin):
 
 @login_manager.user_loader
 def user_loader(name):
-    record = get_db().execute("SELECT id, username, password FROM Users WHERE name = ? LIMIT 1", [name]).fetchone()
+    record = get_db().execute("SELECT id, username, password FROM Users WHERE username = ? LIMIT 1", [name]).fetchone()
     if not record:
         return None
     return User(record[0], record[1], record[2])
@@ -89,11 +89,16 @@ def get_db():
     g._database = db
   return db
 
+
+@app.route("/login")
+def login_form():
+    return render_template("login.html")
+
 @app.route("/login", methods=["POST"])
 def login():
-    name = request.form["name"]
+    name = request.form["username"]
     password = request.form["password"]
-    record = get_db().execute("SELECT id, password FROM Users WHERE name = ? LIMIT 1", [name]).fetchone()
+    record = get_db().execute("SELECT id, password FROM Users WHERE username = ? LIMIT 1", [name]).fetchone()
     print("Record: ",record)
     if not record or password != record[1]:
         print("Record: ",record)
